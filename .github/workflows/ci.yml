@@ -1,0 +1,39 @@
+name: Validate pipeline
+on: [push, pull_request]
+env:
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+jobs:
+  helpers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
+  synthetic-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+      - run: python tests/make_smoke_data.py
+      - run: bash scripts/prepare_data.sh --configfile tests/generated/config.yaml --cores 4 --resources mem_mb=6000 downloads=2
+      - run: snakemake -s workflow/Snakefile --configfile tests/generated/config.yaml --cores 4 --resources mem_mb=6000 downloads=2 --rerun-incomplete
+      - run: python tests/check_smoke.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-reports
+          path: |
+            results/smoke/analysis/summary.json
+            results/smoke/annotation/summary.json
+            results/smoke/logs/
