@@ -1,0 +1,48 @@
+samples: config/samples.tsv
+outdir: results/rrbs
+reference_dir: reference/hg38
+assembly: hg38
+reference_url: https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
+genes_url: https://hgdownload.soe.ucsc.edu/goldenPath/hg38/database/ncbiRefSeqCurated.txt.gz
+islands_url: https://hgdownload.soe.ucsc.edu/goldenPath/hg38/database/cpgIslandExt.txt.gz
+canonical_chromosomes: [chr1, chr2, chr3, chr4, chr5, chr6, chr7, chr8, chr9, chr10, chr11, chr12, chr13, chr14, chr15, chr16, chr17, chr18, chr19, chr20, chr21, chr22, chrX, chrY]
+# Directionality of the selected libraries; verify when changing the dataset.
+non_directional: false
+trim_quality: 20
+trim_length: 20
+# Inspect M-bias before changing these values; avoid arbitrary read clipping.
+ignore_r1: 0
+ignore_r2: 0
+ignore_3prime_r1: 0
+ignore_3prime_r2: 0
+min_coverage: 10
+max_coverage_percentile: 99.9  # 100 disables the upper-coverage filter.
+normalize_coverage: true
+min_per_group: 2
+adjust: qvalue
+overdispersion: none
+test: Chisq
+qvalue: 0.01
+difference: 25
+tiles: true
+tile_size: 1000
+tile_step: 1000
+tile_min_cpg: 10
+promoter_upstream: 2000
+promoter_downstream: 500
+go_enrichment: true
+go_min_genes: 3
+go_max_genes: 500
+threads:
+  index: 8
+  trim: 4
+  # Reserved budget includes Bismark and its two concurrent Bowtie2 processes.
+  align: 8
+  extract: 6
+  differential: 4
+memory_mb:
+  index: 24000
+  trim: 4000
+  align: 24000
+  extract: 8000
+  differential: 48000
