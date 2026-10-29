@@ -1,0 +1,57 @@
+{
+  "synthetic_data_only": true,
+  "analysis": {
+    "assembly": "hg38",
+    "samples": [
+      "test1",
+      "test2",
+      "ctrl1",
+      "ctrl2"
+    ],
+    "comparison": "test minus control",
+    "effect_units": "percentage points",
+    "qvalue_cutoff": 0.01,
+    "absolute_difference_cutoff": 25,
+    "test": "Chisq",
+    "overdispersion": "none",
+    "adjust": "BH",
+    "dmp": {
+      "tested": 727,
+      "significant": 726,
+      "hyper": 726,
+      "hypo": 0,
+      "nonfinite_q": 0
+    },
+    "tiles": {
+      "tested": 13,
+      "significant": 13,
+      "hyper": 13,
+      "hypo": 0,
+      "nonfinite_q": 0
+    },
+    "note": "Two replicates per group: exploratory inference. Significant tiles are fixed windows, not de novo DMRs."
+  },
+  "annotation": {
+    "results": {
+      "dmp": {
+        "tested": 727,
+        "significant": 726,
+        "foreground_genes": 5,
+        "background_genes": 5,
+        "go_terms_tested": 275,
+        "go_terms_fdr05": 0
+      },
+      "tiles": {
+        "tested": 13,
+        "significant": 13,
+        "foreground_genes": 5,
+        "background_genes": 5,
+        "go_terms_tested": 275,
+        "go_terms_fdr05": 0
+      }
+    },
+    "annotation": "UCSC ncbiRefSeqCurated/hg38; overlapping promoters and gene bodies; CpG island and 2kb shores",
+    "go": "Exploratory hypergeometric ORA with BH across all eligible terms, using tested annotated genes as universe. RRBS CpG density and gene length bias are not corrected.",
+    "note": "An overlapping gene is an association, not evidence of regulation or causality."
+  }
+}
