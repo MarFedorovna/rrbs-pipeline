@@ -1,0 +1,7 @@
+cores: 32
+resources:
+  mem_mb: 112000
+  downloads: 2
+printshellcmds: true
+rerun-incomplete: true
+latency-wait: 30
